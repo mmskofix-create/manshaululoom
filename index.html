@@ -582,47 +582,58 @@
         padding-top: 10px; 
     }
     
-    /* ---------------------- */
-    /* NEW CSS FOR PRINTING (Download/Save as PDF) */
-    /* ---------------------- */
+    /* -------------------------------------- */
+    /* NEW CSS FOR PRINTING (Download/Save as PDF) - FIX APPLIED HERE */
+    /* -------------------------------------- */
     @media print {
-        /* Print മീഡിയയിൽ Body-യിലെ എല്ലാ സെക്ഷനുകളും ഹൈഡ് ചെയ്യുന്നു */
-        body > *:not(main),
-        main > *:not(#results) { 
-            display: none !important; /* Hide all main body content except the results section */
+        /* പ്രിൻ്റ് ചെയ്യുമ്പോൾ ആവശ്യമില്ലാത്ത എല്ലാ ഘടകങ്ങളും മറയ്ക്കുന്നു */
+        body > *:not(main), 
+        header, footer, nav, 
+        #splash-screen, 
+        .menu-icon, 
+        .accordion-card-header, 
+        .result-input-group, 
+        .print-download-button {
+            display: none !important; 
         }
         
-        /* പ്രധാന സെക്ഷനുകൾ കാണിക്കുന്നു, അകത്തെ കണ്ടന്റ് മാത്രം */
-        #results, #results-content, .result-content-box, #resultDisplay { 
+        /* റിസൾട്ട് സെക്ഷൻ മാത്രം പൂർണ്ണമായി കാണിക്കുന്നു */
+        main {
+            padding: 0 !important;
+            margin: 0 !important;
+            /* ഉറപ്പായും കാണിക്കാനായി width 100% നൽകുന്നു */
+            width: 100vw !important; 
+        }
+        
+        #results, 
+        #results-content, 
+        .result-content-box, 
+        #resultDisplay, 
+        .result-card {
             display: block !important;
-            width: 100%;
+            width: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
+            box-shadow: none !important; /* ഷാഡോ ഒഴിവാക്കുന്നു */
+            border: none !important;     /* ബോർഡർ ഒഴിവാക്കുന്നു */
         }
         
-        /* പ്രിൻ്റ് ചെയ്യുമ്പോൾ ആവശ്യമില്ലാത്ത ഘടകങ്ങൾ മറയ്ക്കുന്നു */
-        .accordion-card-header,
-        .result-input-group,
-        .print-download-button,
-        .accordion-card {
-            display: none !important; /* Hide search bar, button, and accordion header/border */
-        }
-        
-        /* റിസൾട്ട് കാർഡ് വൃത്തിയായി കാണിക്കാൻ ബോർഡറും ഷാഡോയും മാറ്റുന്നു */
+        /* റിസൾട്ട് കാർഡ് വൃത്തിയായി കാണിക്കുന്നു */
         .result-card {
-            box-shadow: none !important; 
-            border: none !important;     
-            padding: 10px 0 !important; /* ചെറിയ പാഡിംഗ് മാത്രം മതി */
+            padding: 10px 0 !important; 
+            width: 100%;
         }
         
-        /* റിസൾട്ട് ടേബിളിൽ ബോർഡർ ഉറപ്പാക്കുന്നു */
+        /* ടേബിളിൽ ബോർഡർ ഉറപ്പാക്കുന്നു */
         .result-table, .result-table th, .result-table td {
              border: 1px solid #000 !important;
         }
         
-        /* ഹെഡിംഗ് പേജിന് മുകളിലായി സ്ഥാപിക്കാൻ */
+        /* ടേബിളിന് മുകളിലെ ഹെഡിംഗ് ശരിയാക്കുന്നു */
         .result-card h4 {
             padding-top: 10px;
+            text-align: center; 
+            color: #000 !important;
         }
     }
     
@@ -1306,4 +1317,4 @@
     }
   </script>
 </body>
-</html>
+</htmpl>
