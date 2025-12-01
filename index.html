@@ -234,7 +234,8 @@
     #teachers-list, 
     #management-list, 
     #sksbv-list, 
-    #affiliation-content {
+    #affiliation-content,
+    #results-content { /* Hides the inner content of the Results section */
         transition: all 0.3s ease; 
         display: none; /* Default state: Hidden */
     }
@@ -245,7 +246,8 @@
     }
 
     /* Special case for standard block content */
-    #affiliation-content.open {
+    #affiliation-content.open, 
+    #results-content.open { /* Shows the inner content of the Results section */
         display: block; 
     }
 
@@ -497,6 +499,133 @@
         background: rgba(11,61,145,0.06);
     }
 
+    /* ---------------------- */
+    /* NEW CSS FOR RESULT TABLE */
+    /* ---------------------- */
+    .result-content-box {
+        padding: 0 18px 18px 18px;
+    }
+    .result-card {
+        border: 1px solid #e0e0e0;
+        padding: 20px;
+        border-radius: var(--radius);
+        background: var(--white);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        margin-top: 10px;
+    }
+    .result-header, .result-summary {
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(11,61,145,0.06);
+        margin-bottom: 15px;
+    }
+    .result-header p, .result-summary p {
+        margin: 5px 0;
+        font-size: 15px;
+        color: #3b4a66;
+    }
+    .result-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+    .result-table th, .result-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    .result-table th {
+        background-color: #f1f6ff; 
+        color: var(--navy);
+        font-weight: 600;
+        text-align: left;
+    }
+    .result-summary .total-marks span, .result-summary .grade-status span {
+        font-weight: 700;
+        color: var(--navy);
+    }
+    /* Style for Input and Button */
+    .result-input-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    #rollNumberInput {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    .result-input-group button {
+        padding: 12px 20px;
+        background: var(--accent);
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s;
+    }
+    .result-input-group button:hover {
+        background: var(--navy);
+    }
+    .error {
+        color: #d9534f;
+        font-weight: 600;
+        text-align: center;
+        padding: 10px;
+    }
+    .passed { color: #28a745; font-weight: 700; }
+    .failed { color: #dc3545; font-weight: 700; }
+    .result-summary {
+        padding-top: 10px; 
+    }
+    
+    /* ---------------------- */
+    /* NEW CSS FOR PRINTING (Download/Save as PDF) */
+    /* ---------------------- */
+    @media print {
+        /* Print മീഡിയയിൽ Body-യിലെ എല്ലാ സെക്ഷനുകളും ഹൈഡ് ചെയ്യുന്നു */
+        body > *:not(main),
+        main > *:not(#results) { 
+            display: none !important; /* Hide all main body content except the results section */
+        }
+        
+        /* പ്രധാന സെക്ഷനുകൾ കാണിക്കുന്നു, അകത്തെ കണ്ടന്റ് മാത്രം */
+        #results, #results-content, .result-content-box, #resultDisplay { 
+            display: block !important;
+            width: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        /* പ്രിൻ്റ് ചെയ്യുമ്പോൾ ആവശ്യമില്ലാത്ത ഘടകങ്ങൾ മറയ്ക്കുന്നു */
+        .accordion-card-header,
+        .result-input-group,
+        .print-download-button,
+        .accordion-card {
+            display: none !important; /* Hide search bar, button, and accordion header/border */
+        }
+        
+        /* റിസൾട്ട് കാർഡ് വൃത്തിയായി കാണിക്കാൻ ബോർഡറും ഷാഡോയും മാറ്റുന്നു */
+        .result-card {
+            box-shadow: none !important; 
+            border: none !important;     
+            padding: 10px 0 !important; /* ചെറിയ പാഡിംഗ് മാത്രം മതി */
+        }
+        
+        /* റിസൾട്ട് ടേബിളിൽ ബോർഡർ ഉറപ്പാക്കുന്നു */
+        .result-table, .result-table th, .result-table td {
+             border: 1px solid #000 !important;
+        }
+        
+        /* ഹെഡിംഗ് പേജിന് മുകളിലായി സ്ഥാപിക്കാൻ */
+        .result-card h4 {
+            padding-top: 10px;
+        }
+    }
+    
     /* Responsive adjustments for very small screens */
     @media (max-width:560px){
       .grid-3{grid-template-columns:1fr}
@@ -538,6 +667,9 @@
       .accordion-card {
           margin-top: 14px;
       }
+      .result-input-group {
+          flex-direction: column; /* For vertical stacking on small screens */
+      }
     }
   </style>
 </head>
@@ -564,7 +696,8 @@
             <li><a href="#affiliation">Affiliation</a></li> 
             <li><a href="#teachers">Teachers</a></li> 
             <li><a href="#management">Management</a></li> 
-            <li><a href="#sksbv">SKSBV</a></li> <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#sksbv">SKSBV</a></li> 
+            <li><a href="#results">Results</a></li> <li><a href="#gallery">Gallery</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
@@ -615,7 +748,7 @@
                 </div>
             </div>
 
-            <div id="affiliation-content">
+            <div id="affiliation-content" class="result-content-box">
                 <div class="affiliation-box">
                     <h4>സമസ്ത കേരള ഇസ്‌ലാം മത വിദ്യാഭ്യാസ ബോർഡ് (SKIMVB)</h4>
                     <p>
@@ -708,7 +841,7 @@
     <section id="sksbv">
       <div class="accordion-card">
           <div class="accordion-card-header" onclick="toggleSection('sksbv-list', 'sksbv-icon')">
-              <h3>Sksbv</h3>
+              <h3>SKSBV</h3>
               <div class="accordion-icon-container">
                   <i class="fas fa-chevron-down toggle-icon" id="sksbv-icon"></i>
               </div>
@@ -728,15 +861,38 @@
               <p>Secretary</p>
             </div>
 
-            <div class="card" onclick="openTeacherModal('SKSBV CONVENER')">
-               <img src="Fayis.jpg" class="zoom-effect" alt="SK S B V Convener">
+            <div class="card" onclick="openTeacherModal('SKSBV TREASURER')">
+               <img src="Fayis.jpg" class="zoom-effect" alt="SK S B V Treasurer">
               <h4>FAYIS</h4>
               <p>Treasurer</p>
             </div>
           </div>
       </div>
       </section>
-    
+
+    <section id="results">
+        <div class="accordion-card">
+            <div class="accordion-card-header" onclick="toggleSection('results-content', 'results-icon')">
+                <div class="section-head" style="align-items:flex-start; gap:4px; text-align: left; padding: 0;">
+                    <h3>Examination Results</h3>
+                    <div style="color:var(--muted); font-size:14px">Check Your Madrasa Exam Marks</div>
+                </div>
+                <div class="accordion-icon-container">
+                    <i class="fas fa-chevron-down toggle-icon" id="results-icon"></i>
+                </div>
+            </div>
+
+            <div id="results-content" class="result-content-box">
+                <div class="result-input-group">
+                    <input type="number" id="rollNumberInput" placeholder="Enter Roll Number (ഉദാ: 101)" min="1">
+                    <button onclick="searchResult()"><i class="fas fa-search"></i> Search</button>
+                </div>
+
+                <div id="resultDisplay">
+                    </div>
+            </div>
+        </div>
+    </section>
     <section id="gallery">
       <div class="section-head">
         <h3>Gallery</h3>
@@ -789,7 +945,7 @@
   </div>
   <script>
     // ---------------------------------------
-    // SPLASH SCREEN LOGIC
+    // SPLASH SCREEN LOGIC & INITIAL SETUP
     // ---------------------------------------
     window.addEventListener('load', () => {
         const splashScreen = document.getElementById('splash-screen');
@@ -809,6 +965,7 @@
         document.getElementById('management-list').style.display = 'none';
         document.getElementById('sksbv-list').style.display = 'none';
         document.getElementById('affiliation-content').style.display = 'none';
+        document.getElementById('results-content').style.display = 'none'; // Results content hidden initially
     });
     
     // ---------------------------------------
@@ -844,14 +1001,14 @@
     }
 
     // ---------------------------------------
-    // TEACHER & MANAGEMENT DATA 
+    // TEACHER & MANAGEMENT DATA (Original)
     // ---------------------------------------
     const teacherData = {
         'SIDEEQ BAQAVI': {
             img: 'sadar.jpg',
             place: 'vellur',
             phone: '+91 98469 16624',
-            whatsapp: '+91 98469 16624', 
+            whatsapp: '9846916624', 
             facebook: 'https://facebook.com/sidiqbaqavi', 
             instagram: 'https://instagram.com/sidiqbaqavi'
         },
@@ -859,7 +1016,7 @@
             img: 'irshad.jpg',
             place: 'melattur',
             phone: '+91 81138 19155',
-            whatsapp: '+91 81138 19155',
+            whatsapp: '8113819155',
             facebook: '', 
             instagram: 'https://instagram.com/irshad_faizy'
         },
@@ -867,7 +1024,7 @@
             img: 'Ismail.jpg',
             place: 'parayil',
             phone: '+91 90740 44928',
-            whatsapp: '+91 90740 44928',
+            whatsapp: '9074044928',
             facebook: 'https://facebook.com/ismail.darimi',
             instagram: '' 
         },
@@ -875,7 +1032,7 @@
             img: 'murshid.jpg',
             place: 'kozhippuram',
             phone: '+91 80867 85601',
-            whatsapp: '+91 80867 85601',
+            whatsapp: '8086785601',
             facebook: '',
             instagram: ''
         },
@@ -883,7 +1040,7 @@
             img: 'adil.jpg',
             place: 'Nadakkav',
             phone: '+91 97459 97268',
-            whatsapp: '+91 97459 97268',
+            whatsapp: '9745997268',
             facebook: 'https://facebook.com/adhilazhari',
             instagram: ''
         },
@@ -891,7 +1048,7 @@
             img: 'sameer.jpg',
             place: 'Padinjatin pai',
             phone: '+91 97478 89944',
-            whatsapp: '+91 97478 89944',
+            whatsapp: '9747889944',
             facebook: 'https://facebook.com/manager1',
             instagram: ''
         },
@@ -899,7 +1056,7 @@
             img: 'rasheed.jpg',
             place: 'Padinjatin pai',
             phone: '+91 98477 70024',
-            whatsapp: '+91 98477 70024',
+            whatsapp: '9847770024',
             facebook: '',
             instagram: 'https://instagram.com/manager2'
         },
@@ -907,7 +1064,7 @@
             img: 'Swalih.jpg',
             place: 'Padinjatin pai',
             phone: '+91 75103 23242',
-            whatsapp: '+91 75103 23242',
+            whatsapp: '7510323242',
             facebook: '',
             instagram: ''
         },
@@ -939,7 +1096,7 @@
     };
     
     // ---------------------------------------
-    // MODAL OPEN/CLOSE LOGIC
+    // MODAL OPEN/CLOSE LOGIC (Original)
     // ---------------------------------------
     const modal = document.getElementById('teacherModal'); 
     
@@ -953,8 +1110,10 @@
         document.getElementById('modalPhone').textContent = data.phone;
         
         const whatsappLink = document.getElementById('modalWhatsapp');
-        whatsappLink.href = data.whatsapp ? `https://wa.me/${data.whatsapp}` : '#';
-        whatsappLink.style.display = data.whatsapp ? 'inline-block' : 'none';
+        // Ensure whatsapp link uses only numbers for the URL
+        const whatsappNumber = data.whatsapp.replace(/\D/g, ''); 
+        whatsappLink.href = whatsappNumber ? `https://wa.me/${whatsappNumber}` : '#';
+        whatsappLink.style.display = whatsappNumber ? 'inline-block' : 'none';
 
         const facebookLink = document.getElementById('modalFacebook');
         facebookLink.href = (data.facebook && data.facebook.startsWith('http')) ? data.facebook : '#';
@@ -988,10 +1147,12 @@
 
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', function(e){
-        const t = document.querySelector(this.getAttribute('href'));
-        if(t){ 
+        const targetElement = document.querySelector(this.getAttribute('href'));
+        
+        if (targetElement) { 
           e.preventDefault(); 
-          t.scrollIntoView({behavior:'smooth', block:'start'}); 
+          
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
           
           const navCenter = document.getElementById('navCenter');
           if (navCenter.classList.contains('open')) {
@@ -1000,6 +1161,149 @@
         }
       });
     });
+    
+    // ---------------------------------------
+    // 🚨 NEW: INDIVIDUAL RESULT SEARCH LOGIC (Hardcoded Data)
+    // ---------------------------------------
+    
+    // 1. റിസൾട്ട് ഡാറ്റ ഇവിടെ നേരിട്ട് ചേർത്തിരിക്കുന്നു
+    const resultsData = {
+        "101": {
+            "name": "മുഹമ്മദ് ഷാൻ",
+            "class": "Std X",
+            "grade": "A+",
+            "status": "PASSED",
+            "year": 2024,
+            "subjects": [
+                {"subject": "ഖുർആൻ & തജ്‌വീദ്", "marks": 95, "max": 100},
+                {"subject": "ഹദീസ് & തസവ്വുഫ്", "marks": 90, "max": 100},
+                {"subject": "ഫിഖ്‌ഹ്", "marks": 88, "max": 100},
+                {"subject": "താരീഖ്", "marks": 92, "max": 100},
+                {"subject": "നഹ്‌വ്", "marks": 85, "max": 100}
+            ]
+        },
+        
+        "205": {
+            "name": "ഫാത്തിമ സന",
+            "class": "Std I",
+            "grade": "A+",
+            "status": "PASSED",
+            "year": 2024,
+            "subjects": [
+                {"subject": "തഹ്‌ലീൽ", "marks": 98, "max": 100},
+                {"subject": "ഈമാൻ", "marks": 99, "max": 100},
+                {"subject": "അറബിക് (അക്ഷരം)", "marks": 95, "max": 100}
+            ]
+        },
+        
+        "310": {
+            "name": "അബ്ദുല്ല ടി.കെ.",
+            "class": "Std V",
+            "grade": "D",
+            "status": "FAILED",
+            "year": 2024,
+            "subjects": [
+                {"subject": "തഫ്‌സീർ", "marks": 45, "max": 100},
+                {"subject": "അഖ്ലാഖ്", "marks": 55, "max": 100},
+                {"subject": "ഫിഖ്‌ഹ് (ഇബാദത്ത്)", "marks": 30, "max": 100}
+            ]
+        }
+    };
+
+    function searchResult() {
+        const rollNumber = document.getElementById('rollNumberInput').value.trim();
+        const displayArea = document.getElementById('resultDisplay');
+        
+        displayArea.style.display = 'block';
+        displayArea.innerHTML = ''; // മുൻപത്തെ കണ്ടന്റ് ക്ലിയർ ചെയ്യുന്നു
+
+        if (!rollNumber) {
+            displayArea.innerHTML = '<div class="result-card"><p class="error">ദയവായി റോൾ നമ്പർ നൽകുക.</p></div>';
+            return;
+        }
+
+        const result = resultsData[rollNumber];
+        
+        if (result) {
+            // ആകെ മാർക്കുകൾ, ലഭിച്ച മാർക്കുകൾ എന്നിവ കണക്കാക്കുന്നു
+            let totalMarksObtained = 0;
+            let totalMaxMarks = 0;
+            
+            // Subjects array ഉണ്ടോ എന്ന് ഉറപ്പാക്കുന്നു
+            if (!result.subjects || result.subjects.length === 0) {
+                 displayArea.innerHTML = `<div class="result-card"><p class="error">ഈ റോൾ നമ്പറിനുള്ള ഡാറ്റ പൂർണ്ണമല്ല. വിഷയങ്ങളുടെ മാർക്കുകൾ ലഭ്യമല്ല.</p></div>`;
+                 return;
+            }
+
+            result.subjects.forEach(subject => {
+                totalMarksObtained += subject.marks;
+                totalMaxMarks += subject.max;
+            });
+
+            // HTML ടേബിൾ രൂപപ്പെടുത്തുന്നു
+            let subjectTableHTML = `
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50%;">വിഷയം</th>
+                            <th style="width: 25%; text-align: center;">ലഭിച്ച മാർക്ക്</th>
+                            <th style="width: 25%; text-align: center;">പരമാവധി മാർക്ക്</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            result.subjects.forEach(subject => {
+                subjectTableHTML += `
+                    <tr>
+                        <td>${subject.subject}</td>
+                        <td style="text-align: center;">${subject.marks}</td>
+                        <td style="text-align: center;">${subject.max}</td>
+                    </tr>
+                `;
+            });
+            
+            subjectTableHTML += `
+                    </tbody>
+                </table>
+            `;
+
+            // പ്രധാന വിവരങ്ങളും ടേബിളും പ്രദർശിപ്പിക്കുന്നു
+            const statusClass = result.status === 'PASSED' ? 'passed' : 'failed';
+            
+            displayArea.innerHTML = `
+                <div class="result-card">
+                    <h4 style="margin-top:0; color:var(--navy);"> മദ്രസ പരീക്ഷാ ഫലം (${result.year || 'N/A'})</h4>
+                    <div class="result-header">
+                        <p><strong>റോൾ നമ്പർ:</strong> <span>${rollNumber}</span></p>
+                        <p><strong>പേര്:</strong> <span>${result.name || 'N/A'}</span></p>
+                        <p><strong>ക്ലാസ്:</strong> <span>${result.class || 'N/A'}</span></p>
+                    </div>
+
+                    <div class="subject-details">
+                        <h5 style="margin-bottom: 5px; color:var(--navy); font-size:16px;">വിഷയാധിഷ്ഠിത മാർക്കുകൾ</h5>
+                        ${subjectTableHTML}
+                    </div>
+
+                    <div class="result-summary">
+                        <p class="total-marks"><strong>ആകെ മാർക്ക്:</strong> <span>${totalMarksObtained}/${totalMaxMarks}</span></p>
+                        <p class="grade-status">
+                            <strong>ഗ്രേഡ്:</strong> <span>${result.grade || 'N/A'}</span> &nbsp; | &nbsp; 
+                            <strong>ഫലവിവരം:</strong> <span class="${statusClass}">${result.status || 'N/A'}</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="print-download-button" onclick="window.print()" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; max-width: 300px; display: inline-flex; justify-content: center; align-items: center;">
+                        <i class="fas fa-download" style="margin-right: 8px;"></i> മാർക്ക് ഷീറ്റ് ഡൗൺലോഡ് / പ്രിൻ്റ്
+                    </button>
+                </div>
+            `;
+        } else {
+            displayArea.innerHTML = `<div class="result-card"><p class="error">റോൾ നമ്പർ **${rollNumber}** ഉള്ള വിദ്യാർത്ഥിയുടെ ഫലം ലഭ്യമല്ല. നൽകിയ റോൾ നമ്പർ ശരിയാണോ എന്ന് പരിശോധിക്കുക.</p></div>`;
+        }
+    }
   </script>
 </body>
 </html>
