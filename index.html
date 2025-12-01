@@ -583,10 +583,10 @@
     }
     
     /* -------------------------------------- */
-    /* NEW CSS FOR PRINTING (Download/Save as PDF) - FIX APPLIED HERE */
+    /* FINAL FIX: PRINT ONLY THE RESULT CARD */
     /* -------------------------------------- */
     @media print {
-        /* പ്രിൻ്റ് ചെയ്യുമ്പോൾ ആവശ്യമില്ലാത്ത എല്ലാ ഘടകങ്ങളും മറയ്ക്കുന്നു */
+        /* Step 1: Header, Footer, Menu, Search Box, Button എന്നിവയെല്ലാം മറയ്ക്കുന്നു */
         body > *:not(main), 
         header, footer, nav, 
         #splash-screen, 
@@ -597,14 +597,21 @@
             display: none !important; 
         }
         
-        /* റിസൾട്ട് സെക്ഷൻ മാത്രം പൂർണ്ണമായി കാണിക്കുന്നു */
-        main {
-            padding: 0 !important;
-            margin: 0 !important;
-            /* ഉറപ്പായും കാണിക്കാനായി width 100% നൽകുന്നു */
-            width: 100vw !important; 
+        /* Step 2: <main> ടാഗിനുള്ളിലെ #results ഒഴികെയുള്ള എല്ലാ സെക്ഷനുകളും മറയ്ക്കുന്നു */
+        main > *:not(#results) {
+            display: none !important;
         }
         
+        /* Step 3: പ്രിൻ്റ് ഏരിയ വൃത്തിയാക്കുന്നു */
+        body, main {
+            background-color: white !important; 
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            min-height: 100vh !important;
+        }
+
+        /* Step 4: റിസൾട്ട് സെക്ഷൻ പൂർണ്ണമായി കാണിക്കുന്നു, ബോർഡറും ഷാഡോയും ഒഴിവാക്കുന്നു */
         #results, 
         #results-content, 
         .result-content-box, 
@@ -614,14 +621,8 @@
             width: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
-            box-shadow: none !important; /* ഷാഡോ ഒഴിവാക്കുന്നു */
-            border: none !important;     /* ബോർഡർ ഒഴിവാക്കുന്നു */
-        }
-        
-        /* റിസൾട്ട് കാർഡ് വൃത്തിയായി കാണിക്കുന്നു */
-        .result-card {
-            padding: 10px 0 !important; 
-            width: 100%;
+            box-shadow: none !important; 
+            border: none !important;     
         }
         
         /* ടേബിളിൽ ബോർഡർ ഉറപ്പാക്കുന്നു */
@@ -629,7 +630,7 @@
              border: 1px solid #000 !important;
         }
         
-        /* ടേബിളിന് മുകളിലെ ഹെഡിംഗ് ശരിയാക്കുന്നു */
+        /* ഹെഡിംഗ് ശരിയാക്കുന്നു */
         .result-card h4 {
             padding-top: 10px;
             text-align: center; 
@@ -1179,6 +1180,34 @@
     
     // 1. റിസൾട്ട് ഡാറ്റ ഇവിടെ നേരിട്ട് ചേർത്തിരിക്കുന്നു
     const resultsData = {
+        // --- NEW ENTRIES ADDED FOR DEMO ---
+        "1": { 
+            "name": "നവ്യ ഉണ്ണി",
+            "class": "Std V",
+            "grade": "B+",
+            "status": "PASSED",
+            "year": 2025,
+            "subjects": [
+                {"subject": "ഖുർആൻ & തജ്‌വീദ്", "marks": 80, "max": 100},
+                {"subject": "ഹദീസ് & തസവ്വുഫ്", "marks": 85, "max": 100},
+                {"subject": "ഫിഖ്‌ഹ്", "marks": 78, "max": 100}
+            ]
+        },
+        "2": { 
+            "name": "അദ്‌നാൻ കെ",
+            "class": "Std X",
+            "grade": "A",
+            "status": "PASSED",
+            "year": 2025,
+            "subjects": [
+                {"subject": "ഖുർആൻ & തജ്‌വീദ്", "marks": 90, "max": 100},
+                {"subject": "ഹദീസ് & തസവ്വുഫ്", "marks": 95, "max": 100},
+                {"subject": "ഫിഖ്‌ഹ്", "marks": 92, "max": 100},
+                {"subject": "താരീഖ്", "marks": 90, "max": 100},
+                {"subject": "നഹ്‌വ്", "marks": 88, "max": 100}
+            ]
+        },
+        // --- EXISTING ENTRIES (KEEPING FOR REFERENCE) ---
         "101": {
             "name": "മുഹമ്മദ് ഷാൻ",
             "class": "Std X",
@@ -1317,4 +1346,4 @@
     }
   </script>
 </body>
-</htmpl>
+</html>
