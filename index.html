@@ -234,8 +234,8 @@
     #teachers-list, 
     #management-list, 
     #sksbv-list, 
-    #affiliation-content,
-    #results-content { /* Hides the inner content of the Results section */
+    #affiliation-content, 
+    #results-content { /* ADDED #results-content */
         transition: all 0.3s ease; 
         display: none; /* Default state: Hidden */
     }
@@ -246,8 +246,7 @@
     }
 
     /* Special case for standard block content */
-    #affiliation-content.open, 
-    #results-content.open { /* Shows the inner content of the Results section */
+    #affiliation-content.open, #results-content.open { /* ADDED #results-content.open */
         display: block; 
     }
 
@@ -500,143 +499,8 @@
     }
 
     /* ---------------------- */
-    /* NEW CSS FOR RESULT TABLE */
+    /* Removed: NEW CSS FOR RESULT TABLE */
     /* ---------------------- */
-    .result-content-box {
-        padding: 0 18px 18px 18px;
-    }
-    .result-card {
-        border: 1px solid #e0e0e0;
-        padding: 20px;
-        border-radius: var(--radius);
-        background: var(--white);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        margin-top: 10px;
-    }
-    .result-header, .result-summary {
-        padding-bottom: 10px;
-        border-bottom: 1px solid rgba(11,61,145,0.06);
-        margin-bottom: 15px;
-    }
-    .result-header p, .result-summary p {
-        margin: 5px 0;
-        font-size: 15px;
-        color: #3b4a66;
-    }
-    .result-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-        margin-bottom: 20px;
-        font-size: 14px;
-    }
-    .result-table th, .result-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-    .result-table th {
-        background-color: #f1f6ff; 
-        color: var(--navy);
-        font-weight: 600;
-        text-align: left;
-    }
-    .result-summary .total-marks span, .result-summary .grade-status span {
-        font-weight: 700;
-        color: var(--navy);
-    }
-    /* Style for Input and Button */
-    .result-input-group {
-        display: flex;
-        gap: 10px;
-        margin-top: 15px;
-    }
-    #rollNumberInput {
-        flex: 1;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 16px;
-    }
-    .result-input-group button {
-        padding: 12px 20px;
-        background: var(--accent);
-        color: var(--white);
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: background 0.3s;
-    }
-    .result-input-group button:hover {
-        background: var(--navy);
-    }
-    .error {
-        color: #d9534f;
-        font-weight: 600;
-        text-align: center;
-        padding: 10px;
-    }
-    .passed { color: #28a745; font-weight: 700; }
-    .failed { color: #dc3545; font-weight: 700; }
-    .result-summary {
-        padding-top: 10px; 
-    }
-    
-    /* -------------------------------------- */
-    /* FINAL FIX: PRINT ONLY THE RESULT CARD */
-    /* -------------------------------------- */
-    @media print {
-        /* Step 1: Header, Footer, Menu, Search Box, Button എന്നിവയെല്ലാം മറയ്ക്കുന്നു */
-        body > *:not(main), 
-        header, footer, nav, 
-        #splash-screen, 
-        .menu-icon, 
-        .accordion-card-header, 
-        .result-input-group, 
-        .print-download-button {
-            display: none !important; 
-        }
-        
-        /* Step 2: <main> ടാഗിനുള്ളിലെ #results ഒഴികെയുള്ള എല്ലാ സെക്ഷനുകളും മറയ്ക്കുന്നു */
-        main > *:not(#results) {
-            display: none !important;
-        }
-        
-        /* Step 3: പ്രിൻ്റ് ഏരിയ വൃത്തിയാക്കുന്നു */
-        body, main {
-            background-color: white !important; 
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
-            min-height: 100vh !important;
-        }
-
-        /* Step 4: റിസൾട്ട് സെക്ഷൻ പൂർണ്ണമായി കാണിക്കുന്നു, ബോർഡറും ഷാഡോയും ഒഴിവാക്കുന്നു */
-        #results, 
-        #results-content, 
-        .result-content-box, 
-        #resultDisplay, 
-        .result-card {
-            display: block !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            box-shadow: none !important; 
-            border: none !important;     
-        }
-        
-        /* ടേബിളിൽ ബോർഡർ ഉറപ്പാക്കുന്നു */
-        .result-table, .result-table th, .result-table td {
-             border: 1px solid #000 !important;
-        }
-        
-        /* ഹെഡിംഗ് ശരിയാക്കുന്നു */
-        .result-card h4 {
-            padding-top: 10px;
-            text-align: center; 
-            color: #000 !important;
-        }
-    }
     
     /* Responsive adjustments for very small screens */
     @media (max-width:560px){
@@ -679,9 +543,6 @@
       .accordion-card {
           margin-top: 14px;
       }
-      .result-input-group {
-          flex-direction: column; /* For vertical stacking on small screens */
-      }
     }
   </style>
 </head>
@@ -709,7 +570,8 @@
             <li><a href="#teachers">Teachers</a></li> 
             <li><a href="#management">Management</a></li> 
             <li><a href="#sksbv">SKSBV</a></li> 
-            <li><a href="#results">Results</a></li> <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#results">Results</a></li> 
+            <li><a href="#gallery">Gallery</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
@@ -886,22 +748,27 @@
         <div class="accordion-card">
             <div class="accordion-card-header" onclick="toggleSection('results-content', 'results-icon')">
                 <div class="section-head" style="align-items:flex-start; gap:4px; text-align: left; padding: 0;">
-                    <h3>Examination Results</h3>
-                    <div style="color:var(--muted); font-size:14px">Check Your Madrasa Exam Marks</div>
+                    <h3>Exam Results</h3>
+                    <div style="color:var(--muted); font-size:14px">SKIMVB & Internal Exam Results</div>
                 </div>
                 <div class="accordion-icon-container">
                     <i class="fas fa-chevron-down toggle-icon" id="results-icon"></i>
                 </div>
             </div>
 
-            <div id="results-content" class="result-content-box">
-                <div class="result-input-group">
-                    <input type="number" id="rollNumberInput" placeholder="Enter Roll Number (ഉദാ: 101)" min="1">
-                    <button onclick="searchResult()"><i class="fas fa-search"></i> Search</button>
+            <div id="results-content" class="result-content-box" style="padding: 0 18px 18px 18px;">
+                <div style="padding: 18px; border: 1px solid rgba(11,61,145,0.08); background: #f9fcff; border-radius: 12px; margin-top: 0;">
+                    <p style="margin: 0 0 10px 0; color: #3b4a66;">പരീക്ഷാ ഫലങ്ങൾ അറിയാൻ താഴെയുള്ള ലിങ്കിൽ ക്ലിക്കു ചെയ്യുക:</p>
+                    <a href="https://mmskofix-create.github.io/madrasa-result-/" target="_blank" style="
+                        display: inline-block;
+                        padding: 10px 15px;
+                        background-color: var(--accent);
+                        color: var(--white);
+                        border-radius: 8px;
+                        font-weight: 600;
+                        transition: background-color 0.3s;
+                    ">View Results <i class="fas fa-external-link-alt"></i></a>
                 </div>
-
-                <div id="resultDisplay">
-                    </div>
             </div>
         </div>
     </section>
@@ -977,7 +844,7 @@
         document.getElementById('management-list').style.display = 'none';
         document.getElementById('sksbv-list').style.display = 'none';
         document.getElementById('affiliation-content').style.display = 'none';
-        document.getElementById('results-content').style.display = 'none'; // Results content hidden initially
+        document.getElementById('results-content').style.display = 'none'; // ADDED
     });
     
     // ---------------------------------------
@@ -1117,7 +984,7 @@
         if (!data) return; 
         
         document.getElementById('modalImage').src = data.img;
-        document.getElementById('modalName').textContent = personName;
+        document.getElementById('modalName').textContent = personName.replace('MANAGER 1', 'SAMEER').replace('MANAGER 2', 'RASHEED').replace('MANAGER 3', 'SWALIH').replace('SKSBV PRESIDENT', 'ALTHAF').replace('SKSBV SECRETARY', 'ANSHIF').replace('SKSBV TREASURER', 'FAYIS');
         document.getElementById('modalPlace').textContent = data.place;
         document.getElementById('modalPhone').textContent = data.phone;
         
@@ -1174,176 +1041,6 @@
       });
     });
     
-    // ---------------------------------------
-    // 🚨 NEW: INDIVIDUAL RESULT SEARCH LOGIC (Hardcoded Data)
-    // ---------------------------------------
-    
-    // 1. റിസൾട്ട് ഡാറ്റ ഇവിടെ നേരിട്ട് ചേർത്തിരിക്കുന്നു
-    const resultsData = {
-        // --- NEW ENTRIES ADDED FOR DEMO ---
-        "1": { 
-            "name": "നവ്യ ഉണ്ണി",
-            "class": "Std V",
-            "grade": "B+",
-            "status": "PASSED",
-            "year": 2025,
-            "subjects": [
-                {"subject": "ഖുർആൻ & തജ്‌വീദ്", "marks": 80, "max": 100},
-                {"subject": "ഹദീസ് & തസവ്വുഫ്", "marks": 85, "max": 100},
-                {"subject": "ഫിഖ്‌ഹ്", "marks": 78, "max": 100}
-            ]
-        },
-        "2": { 
-            "name": "അദ്‌നാൻ കെ",
-            "class": "Std X",
-            "grade": "A",
-            "status": "PASSED",
-            "year": 2025,
-            "subjects": [
-                {"subject": "ഖുർആൻ & തജ്‌വീദ്", "marks": 90, "max": 100},
-                {"subject": "ഹദീസ് & തസവ്വുഫ്", "marks": 95, "max": 100},
-                {"subject": "ഫിഖ്‌ഹ്", "marks": 92, "max": 100},
-                {"subject": "താരീഖ്", "marks": 90, "max": 100},
-                {"subject": "നഹ്‌വ്", "marks": 88, "max": 100}
-            ]
-        },
-        // --- EXISTING ENTRIES (KEEPING FOR REFERENCE) ---
-        "101": {
-            "name": "മുഹമ്മദ് ഷാൻ",
-            "class": "Std X",
-            "grade": "A+",
-            "status": "PASSED",
-            "year": 2024,
-            "subjects": [
-                {"subject": "ഖുർആൻ & തജ്‌വീദ്", "marks": 95, "max": 100},
-                {"subject": "ഹദീസ് & തസവ്വുഫ്", "marks": 90, "max": 100},
-                {"subject": "ഫിഖ്‌ഹ്", "marks": 88, "max": 100},
-                {"subject": "താരീഖ്", "marks": 92, "max": 100},
-                {"subject": "നഹ്‌വ്", "marks": 85, "max": 100}
-            ]
-        },
-        
-        "205": {
-            "name": "ഫാത്തിമ സന",
-            "class": "Std I",
-            "grade": "A+",
-            "status": "PASSED",
-            "year": 2024,
-            "subjects": [
-                {"subject": "തഹ്‌ലീൽ", "marks": 98, "max": 100},
-                {"subject": "ഈമാൻ", "marks": 99, "max": 100},
-                {"subject": "അറബിക് (അക്ഷരം)", "marks": 95, "max": 100}
-            ]
-        },
-        
-        "310": {
-            "name": "അബ്ദുല്ല ടി.കെ.",
-            "class": "Std V",
-            "grade": "D",
-            "status": "FAILED",
-            "year": 2024,
-            "subjects": [
-                {"subject": "തഫ്‌സീർ", "marks": 45, "max": 100},
-                {"subject": "അഖ്ലാഖ്", "marks": 55, "max": 100},
-                {"subject": "ഫിഖ്‌ഹ് (ഇബാദത്ത്)", "marks": 30, "max": 100}
-            ]
-        }
-    };
-
-    function searchResult() {
-        const rollNumber = document.getElementById('rollNumberInput').value.trim();
-        const displayArea = document.getElementById('resultDisplay');
-        
-        displayArea.style.display = 'block';
-        displayArea.innerHTML = ''; // മുൻപത്തെ കണ്ടന്റ് ക്ലിയർ ചെയ്യുന്നു
-
-        if (!rollNumber) {
-            displayArea.innerHTML = '<div class="result-card"><p class="error">ദയവായി റോൾ നമ്പർ നൽകുക.</p></div>';
-            return;
-        }
-
-        const result = resultsData[rollNumber];
-        
-        if (result) {
-            // ആകെ മാർക്കുകൾ, ലഭിച്ച മാർക്കുകൾ എന്നിവ കണക്കാക്കുന്നു
-            let totalMarksObtained = 0;
-            let totalMaxMarks = 0;
-            
-            // Subjects array ഉണ്ടോ എന്ന് ഉറപ്പാക്കുന്നു
-            if (!result.subjects || result.subjects.length === 0) {
-                 displayArea.innerHTML = `<div class="result-card"><p class="error">ഈ റോൾ നമ്പറിനുള്ള ഡാറ്റ പൂർണ്ണമല്ല. വിഷയങ്ങളുടെ മാർക്കുകൾ ലഭ്യമല്ല.</p></div>`;
-                 return;
-            }
-
-            result.subjects.forEach(subject => {
-                totalMarksObtained += subject.marks;
-                totalMaxMarks += subject.max;
-            });
-
-            // HTML ടേബിൾ രൂപപ്പെടുത്തുന്നു
-            let subjectTableHTML = `
-                <table class="result-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 50%;">വിഷയം</th>
-                            <th style="width: 25%; text-align: center;">ലഭിച്ച മാർക്ക്</th>
-                            <th style="width: 25%; text-align: center;">പരമാവധി മാർക്ക്</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            result.subjects.forEach(subject => {
-                subjectTableHTML += `
-                    <tr>
-                        <td>${subject.subject}</td>
-                        <td style="text-align: center;">${subject.marks}</td>
-                        <td style="text-align: center;">${subject.max}</td>
-                    </tr>
-                `;
-            });
-            
-            subjectTableHTML += `
-                    </tbody>
-                </table>
-            `;
-
-            // പ്രധാന വിവരങ്ങളും ടേബിളും പ്രദർശിപ്പിക്കുന്നു
-            const statusClass = result.status === 'PASSED' ? 'passed' : 'failed';
-            
-            displayArea.innerHTML = `
-                <div class="result-card">
-                    <h4 style="margin-top:0; color:var(--navy);"> മദ്രസ പരീക്ഷാ ഫലം (${result.year || 'N/A'})</h4>
-                    <div class="result-header">
-                        <p><strong>റോൾ നമ്പർ:</strong> <span>${rollNumber}</span></p>
-                        <p><strong>പേര്:</strong> <span>${result.name || 'N/A'}</span></p>
-                        <p><strong>ക്ലാസ്:</strong> <span>${result.class || 'N/A'}</span></p>
-                    </div>
-
-                    <div class="subject-details">
-                        <h5 style="margin-bottom: 5px; color:var(--navy); font-size:16px;">വിഷയാധിഷ്ഠിത മാർക്കുകൾ</h5>
-                        ${subjectTableHTML}
-                    </div>
-
-                    <div class="result-summary">
-                        <p class="total-marks"><strong>ആകെ മാർക്ക്:</strong> <span>${totalMarksObtained}/${totalMaxMarks}</span></p>
-                        <p class="grade-status">
-                            <strong>ഗ്രേഡ്:</strong> <span>${result.grade || 'N/A'}</span> &nbsp; | &nbsp; 
-                            <strong>ഫലവിവരം:</strong> <span class="${statusClass}">${result.status || 'N/A'}</span>
-                        </p>
-                    </div>
-                </div>
-                
-                <div style="text-align: center; margin-top: 20px;">
-                    <button class="print-download-button" onclick="window.print()" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; max-width: 300px; display: inline-flex; justify-content: center; align-items: center;">
-                        <i class="fas fa-download" style="margin-right: 8px;"></i> മാർക്ക് ഷീറ്റ് ഡൗൺലോഡ് / പ്രിൻ്റ്
-                    </button>
-                </div>
-            `;
-        } else {
-            displayArea.innerHTML = `<div class="result-card"><p class="error">റോൾ നമ്പർ **${rollNumber}** ഉള്ള വിദ്യാർത്ഥിയുടെ ഫലം ലഭ്യമല്ല. നൽകിയ റോൾ നമ്പർ ശരിയാണോ എന്ന് പരിശോധിക്കുക.</p></div>`;
-        }
-    }
   </script>
 </body>
 </html>
