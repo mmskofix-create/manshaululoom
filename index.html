@@ -347,12 +347,47 @@
         border-radius: 10px;
     }
     /* --------------------------------------- */
+    
+    /* --------------------------------------- */
+    /* GALLERY STYLES (UPDATED FOR IMAGES) */
+    /* --------------------------------------- */
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 
+    /* GALLERY - Updated CSS for proper image display */
+    .gallery div{
+        height:120px; /* ബോക്സിൻ്റെ ഉയരം */
+        border-radius:10px;
+        border:1px solid rgba(11,61,145,0.06);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:var(--navy);
+        font-weight:700;
+        padding: 0; /* Remove padding for image fill */
+        overflow: hidden; 
+        cursor: pointer; /* Gallery images are clickable */
+    }
+    
+    /* Style for the image inside the gallery div */
+    .gallery div img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Crops image to cover the box */
+        border-radius: 10px; /* Same border radius as the box */
+        transition: transform 0.3s ease;
+    }
+
+    /* Zoom effect on hover */
+    .gallery div img:hover {
+        transform: scale(1.1);
+    }
+    /* --------------------------------------- */
+    
     /* --------------------------------------- */
     /* MODAL (Popup) STYLES */
     /* --------------------------------------- */
     .modal {
-        display: none; 
+        display: none; /* <--- ഇത് എല്ലാ മോഡലുകളും ഡിഫോൾട്ടായി ഹൈഡ് ചെയ്യുന്നു */
         position: fixed; 
         z-index: 100; 
         left: 0;
@@ -361,7 +396,7 @@
         height: 100%; 
         overflow: auto; 
         background-color: rgba(0,0,0,0.7); 
-        padding-top: 60px;
+        padding-top: 60px; /* ടീച്ചർ മോഡലിന് വേണ്ടി */
     }
 
     .modal-content {
@@ -456,15 +491,57 @@
     }
 
     /* --------------------------------------- */
+    /* NEW: IMAGE MODAL STYLES (for zoomed image) */
+    /* --------------------------------------- */
+    #imageModal {
+        padding-top: 0; /* Align image better */
+        align-items: center; /* Center vertically */
+        justify-content: center; /* Center horizontally */
+        /* display: flex; എന്നത് ഇവിടെ നിന്നും നീക്കം ചെയ്തു. .modal ക്ലാസ്സ് ഇത് കൈകാര്യം ചെയ്യും. */
+    }
+
+    /* Override .modal-content for the image itself */
+    #imageModal .modal-content {
+        width: auto; 
+        max-width: 90%; 
+        max-height: 90%;
+        margin: auto; 
+        display: block; 
+        border-radius: 0;
+        background-color: transparent; 
+        box-shadow: none;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+        object-fit: contain; 
+    }
     
-    /* GRID (old - if you need it for other sections, keep it) */
-    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    /* Close button positioning for image modal (top right corner of screen) */
+    #imageModal .close {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+        opacity: 0.8;
+    }
+    
+    #imageModal .close:hover,
+    #imageModal .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+        opacity: 1;
+    }
 
-    /* GALLERY */
-    .gallery div{height:120px;border-radius:10px;background:linear-gradient(180deg,#f6fbff,#ffffff);border:1px solid rgba(11,61,145,0.06);display:flex;align-items:center;justify-content:center;color:var(--navy);font-weight:700}
-
-    footer{background:var(--navy);color:var(--white);padding:18px;text-align:center;margin-top:30px;border-top:4px solid var(--accent)}
-
+    /* Add Zoom Animation */
+    @keyframes zoom {
+        from {transform: scale(0)} 
+        to {transform: scale(1)}
+    }
+    /* --------------------------------------- */
+    
     /* CSS FOR ZOOM EFFECT */
     .zoom-effect {
         transition: transform 0.3s ease; 
@@ -563,6 +640,11 @@
       }
       .accordion-card {
           margin-top: 14px;
+      }
+      
+      /* Media query to reduce font size on small screens */
+      #imageModal .modal-content {
+            width: 100%;
       }
     }
   </style>
@@ -775,13 +857,14 @@
                 </div>
             </div>
 
-            <div id="results-content" style="padding:  18px 18px 18px;">
+            <div id="results-content" style="padding: 0 18px 18px 18px;">
                 <div class="results-link-box">
                     <a href="https://mmskofix-create.github.io/madrasa-result-/" target="_blank">View Results <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
         </div>
     </section>
+    
     <section id="gallery">
       <div class="section-head">
         <h3>Gallery</h3>
@@ -789,7 +872,10 @@
       </div>
 
       <div style="margin-top:14px" class="grid-2 gallery">
-        <div>Event Photo 1</div><div>Class Photo 2</div><div>Building View 3</div><div>Celebration 4</div>
+        <div onclick="openImageModal('m1.jpg')"><img src="m1.jpg" alt="Event Photo 1" loading="lazy"></div>
+        <div onclick="openImageModal('m2.jpg')"><img src="m2.jpg" alt="Class Photo 2" loading="lazy"></div>
+        <div onclick="openImageModal('m5.jpg')"><img src="m5.jpg" alt="Building View 3" loading="lazy"></div>
+        <div onclick="openImageModal('m4.jpg')"><img src="m4.jpg" alt="Celebration 4" loading="lazy"></div>
       </div>
     </section>
 
@@ -806,10 +892,6 @@
       </div>
     </section>
   </main>
-
-  <footer>
-    © 2025 MANSHAUL ULOOM MADRASA
-  </footer>
 
   <div id="teacherModal" class="modal">
       <div class="modal-content">
@@ -832,6 +914,15 @@
           </div>
       </div>
   </div>
+
+  <div id="imageModal" class="modal">
+      <span class="close" onclick="closeImageModal()">&times;</span>
+      <img class="modal-content" id="img01">
+  </div>
+  <footer>
+    © 2025 MANSHAUL ULOOM MADRASA
+  </footer>
+
   <script>
     // ---------------------------------------
     // SPLASH SCREEN LOGIC & INITIAL SETUP
@@ -854,7 +945,7 @@
         document.getElementById('management-list').style.display = 'none';
         document.getElementById('sksbv-list').style.display = 'none';
         document.getElementById('affiliation-content').style.display = 'none';
-        document.getElementById('results-content').style.display = 'none'; // ADDED 
+        document.getElementById('results-content').style.display = 'none'; 
     });
     
     // ---------------------------------------
@@ -985,7 +1076,7 @@
     };
     
     // ---------------------------------------
-    // MODAL OPEN/CLOSE LOGIC (Original)
+    // TEACHER MODAL OPEN/CLOSE LOGIC (Original)
     // ---------------------------------------
     const modal = document.getElementById('teacherModal'); 
     
@@ -1023,16 +1114,38 @@
         document.body.style.overflow = 'auto'; 
     }
     
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            closeModal();
-        }
+    // ---------------------------------------
+    // IMAGE MODAL LOGIC (New)
+    // ---------------------------------------
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('img01');
+
+    function openImageModal(imageSrc) {
+        modalImage.src = imageSrc;
+        imageModal.style.display = 'flex'; // തുറക്കുമ്പോൾ മാത്രം 'flex' സെറ്റ് ചെയ്യുന്നു
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeImageModal() {
+        imageModal.style.display = 'none'; 
+        document.body.style.overflow = 'auto'; 
     }
 
     // Existing functions (Menu Toggle & Smooth Scroll)
     function toggleMenu() {
         const navCenter = document.getElementById('navCenter');
         navCenter.classList.toggle('open');
+    }
+
+    window.onclick = function(event) {
+        // Close Teacher Modal
+        if (event.target == modal) {
+            closeModal();
+        }
+        // Close Image Modal
+        if (event.target == imageModal) {
+            closeImageModal();
+        }
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1055,4 +1168,3 @@
   </script>
 </body>
 </html>
-printf("");
