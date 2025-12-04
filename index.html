@@ -234,8 +234,8 @@
     #teachers-list, 
     #management-list, 
     #sksbv-list, 
-    #affiliation-content, 
-    #results-content { /* ADDED #results-content */
+    #affiliation-content,
+    #results-content { 
         transition: all 0.3s ease; 
         display: none; /* Default state: Hidden */
     }
@@ -246,7 +246,7 @@
     }
 
     /* Special case for standard block content */
-    #affiliation-content.open, #results-content.open { /* ADDED #results-content.open */
+    #affiliation-content.open, #results-content.open { 
         display: block; 
     }
 
@@ -267,6 +267,31 @@
         width: 100%; 
         margin-top: 0;
     }
+    
+    /* Custom style for the link inside the results accordion */
+    .results-link-box {
+        padding: 18px; 
+        border: 1px solid rgba(11,61,145,0.08); 
+        background: #f9fcff; 
+        border-radius: 12px; 
+        margin-top: 0;
+        text-align: center; /* Centering the button */
+    }
+
+    .results-link-box a {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: var(--accent);
+        color: var(--white);
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background-color 0.3s;
+    }
+
+    .results-link-box a:hover {
+        background-color: #0c4cb4; /* Slightly darker accent on hover */
+    }
+    
     /* --------------------------------------- */
 
 
@@ -497,10 +522,6 @@
     .nav-center.open nav ul li a:hover {
         background: rgba(11,61,145,0.06);
     }
-
-    /* ---------------------- */
-    /* Removed: NEW CSS FOR RESULT TABLE */
-    /* ---------------------- */
     
     /* Responsive adjustments for very small screens */
     @media (max-width:560px){
@@ -570,8 +591,7 @@
             <li><a href="#teachers">Teachers</a></li> 
             <li><a href="#management">Management</a></li> 
             <li><a href="#sksbv">SKSBV</a></li> 
-            <li><a href="#results">Results</a></li> 
-            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#results">Results</a></li> <li><a href="#gallery">Gallery</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
@@ -749,25 +769,15 @@
             <div class="accordion-card-header" onclick="toggleSection('results-content', 'results-icon')">
                 <div class="section-head" style="align-items:flex-start; gap:4px; text-align: left; padding: 0;">
                     <h3>Exam Results</h3>
-                    <div style="color:var(--muted); font-size:14px">SKIMVB & Internal Exam Results</div>
-                </div>
+                    </div>
                 <div class="accordion-icon-container">
                     <i class="fas fa-chevron-down toggle-icon" id="results-icon"></i>
                 </div>
             </div>
 
-            <div id="results-content" class="result-content-box" style="padding: 0 18px 18px 18px;">
-                <div style="padding: 18px; border: 1px solid rgba(11,61,145,0.08); background: #f9fcff; border-radius: 12px; margin-top: 0;">
-                    <p style="margin: 0 0 10px 0; color: #3b4a66;">പരീക്ഷാ ഫലങ്ങൾ അറിയാൻ താഴെയുള്ള ലിങ്കിൽ ക്ലിക്കു ചെയ്യുക:</p>
-                    <a href="https://mmskofix-create.github.io/madrasa-result-/" target="_blank" style="
-                        display: inline-block;
-                        padding: 10px 15px;
-                        background-color: var(--accent);
-                        color: var(--white);
-                        border-radius: 8px;
-                        font-weight: 600;
-                        transition: background-color 0.3s;
-                    ">View Results <i class="fas fa-external-link-alt"></i></a>
+            <div id="results-content" style="padding:  18px 18px 18px;">
+                <div class="results-link-box">
+                    <a href="https://mmskofix-create.github.io/madrasa-result-/" target="_blank">View Results <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
         </div>
@@ -844,7 +854,7 @@
         document.getElementById('management-list').style.display = 'none';
         document.getElementById('sksbv-list').style.display = 'none';
         document.getElementById('affiliation-content').style.display = 'none';
-        document.getElementById('results-content').style.display = 'none'; // ADDED
+        document.getElementById('results-content').style.display = 'none'; // ADDED 
     });
     
     // ---------------------------------------
@@ -984,6 +994,7 @@
         if (!data) return; 
         
         document.getElementById('modalImage').src = data.img;
+        // Updated textContent logic to correctly display names
         document.getElementById('modalName').textContent = personName.replace('MANAGER 1', 'SAMEER').replace('MANAGER 2', 'RASHEED').replace('MANAGER 3', 'SWALIH').replace('SKSBV PRESIDENT', 'ALTHAF').replace('SKSBV SECRETARY', 'ANSHIF').replace('SKSBV TREASURER', 'FAYIS');
         document.getElementById('modalPlace').textContent = data.place;
         document.getElementById('modalPhone').textContent = data.phone;
@@ -1044,3 +1055,4 @@
   </script>
 </body>
 </html>
+printf("");
